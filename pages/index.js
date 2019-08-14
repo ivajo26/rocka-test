@@ -1,29 +1,34 @@
 import { useState, Fragment, useEffect } from 'react'
 import Head from 'next/head'
 import movies from '../movies.json'
-import List from '../tools/list'
+import List from '../tools/list' // Function to create a linked list from array
 import { getValues, orderArrays, filterInArrays } from '../tools/functions'
 
+// Get Genres, Actors and Imdb Ratings
 const Genres = getValues(movies, 'genres')
 const Actors = getValues(movies, 'actors')
 const ImdbRating = orderArrays(getValues(movies, 'imdbRating', false), false)
 
 
 function Home() {
-  const [movie, setMovie] = useState(null)
-  const [genre, setGenre] = useState(null)
-  const [actor, setActor] = useState(null)
-  const [imdbRating, setImdbRating] = useState(null)
-  const [movieList, setMovieList] = useState(List(movies))
+  // Set state of view
+  const [movie, setMovie] = useState(null) // State for current movie
+  const [genre, setGenre] = useState(null) // State for selected genre
+  const [actor, setActor] = useState(null) // State for selected actor
+  const [imdbRating, setImdbRating] = useState(null) // State for selected imdb rating 
+  const [movieList, setMovieList] = useState(List(movies)) // State for current List Movies
 
-  const handleChangeFilter = async (setFilter, value) => {
-    await setFilter(value)
-
+  // General function to handle changes
+  const handleChangeFilter = (setFilter, value) => {
+    setFilter(value)
   }
+
+  // Function to set the movie when the list is changed 
   useEffect(() => {
     setMovie(movieList.head)
   }, [movieList])
 
+  // Function to set the list when the filters is changed 
   useEffect(() => {
     const list = filterInArrays(imdbRating, 'imdbRating', filterInArrays(actor, 'actors', filterInArrays(genre, 'genres', movies)), false)
     setMovieList(List(list))
@@ -107,14 +112,13 @@ function Home() {
             </div>
             <div className="col-12 text-center mt-4">
               <div className="btn-group" role="group" >
-                <button className="btn btn-info" onClick={() => setMovie(movie.prev || movieList.tail)}>&lt; Anterior</button>
-                <button className="btn btn-info" onClick={() => setMovie(movie.next || movieList.head)}>Siguiente &gt;</button>
+                <button className="btn btn-info" onClick={() => setMovie(movie.prev || movieList.tail)}>&lt; Previous</button>
+                <button className="btn btn-info" onClick={() => setMovie(movie.next || movieList.head)}>Next &gt;</button>
               </div>
             </div>
           </div>
         )}
       </div>
-
     </Fragment>
   )
 }

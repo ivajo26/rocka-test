@@ -1,13 +1,12 @@
+// Filter array from value and key
 export function filterInArrays(value, array, data, isArray = true) {
     if (!value) {
         return data
     }
-    console.log(isArray ? data.filter(item => item[array].filter(g => g === value).length > 0) : data.filter(item => item[array] === value));
-    
-    
     return isArray ? data.filter(item => item[array].filter(g => g === value).length > 0) : data.filter(item => item[array] === value)
 }
 
+// Order array from key
 export function orderArrays(data, asc = true, key = null) {
     return data.sort((a, b) => {
         if (key) {
@@ -18,6 +17,7 @@ export function orderArrays(data, asc = true, key = null) {
     })
 }
 
+// Extract values from an object field
 export function getValues(data, key, isArray = true) {
     const values = []
     data.forEach(d => {

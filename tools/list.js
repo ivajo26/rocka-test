@@ -1,3 +1,4 @@
+// Class for a node in the list
 class Node {
     constructor(data, next, prev) {
         this.data = data;
@@ -6,6 +7,7 @@ class Node {
     };
 };
 
+// Class for a linked list
 class List {
     constructor() {
         this.head = null;
@@ -25,10 +27,6 @@ class List {
             this.head = newNode;
         };
         this.size++;
-    };
-
-    isEmpty() {
-        return this.size === 0;
     };
 }
 
